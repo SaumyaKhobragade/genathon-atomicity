@@ -1,0 +1,64 @@
+{
+  "name": "memory-lane-snapshot-monorepo",
+  "version": "1.0.0",
+  "description": "Sparky - AI-Powered Personal Content Organizer (Extension + Next.js Website)",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "packages/website/frontend",
+    "packages/website/backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev:website",
+    "dev:website": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd packages/website/frontend && npm run dev",
+    "dev:backend": "cd packages/website/backend && npm run dev",
+    "build": "npm run build:extension && npm run build:website",
+    "build:extension": "cd packages/extension && npm run build",
+    "build:website": "cd packages/website/frontend && npm run build",
+    "test": "npm run test:extension && npm run test:website",
+    "test:extension": "cd packages/extension && npm run test",
+    "test:website": "cd packages/website/backend && npm run test",
+    "lint": "eslint packages/*/src --ext .js,.jsx,.ts,.tsx",
+    "install:all": "npm install && npm run install:extension && npm run install:frontend && npm run install:backend",
+    "install:extension": "cd packages/extension && npm install",
+    "install:frontend": "cd packages/website/frontend && npm install",
+    "install:backend": "cd packages/website/backend && npm install",
+    "clean": "rimraf packages/*/node_modules packages/*/dist packages/*/build",
+    "extension:dev-setup": "cd packages/extension && powershell -ExecutionPolicy Bypass -File setup-dev.ps1",
+    "extension:validate": "cd packages/extension && node verify-extension.js",
+    "extension:build-icons": "cd packages/extension && powershell -ExecutionPolicy Bypass -File create-icons.ps1",
+    "extension:zip": "cd packages/extension && powershell Compress-Archive -Path * -DestinationPath ../browsing-tracker-extension.zip -Force"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "daisyui": "^5.1.30",
+    "eslint": "^8.57.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "rimraf": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "chrome-extension",
+    "ai-powered",
+    "content-organizer",
+    "nextjs",
+    "postgresql",
+    "monorepo",
+    "browsing-tracker"
+  ],
+  "author": "Hardik Sharma",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/26hardiksharma/genathon-atomicity-extension.git"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.23",
+    "react-icons": "^5.5.0"
+  }
+}

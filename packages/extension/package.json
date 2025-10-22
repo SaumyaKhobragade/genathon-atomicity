@@ -1,0 +1,19 @@
+{
+  "name": "memory-lane-extension",
+  "version": "1.0.0",
+  "description": "Sparky Chrome Extension - Capture and store browsing memories locally",
+  "author": "Your Team",
+  "license": "MIT",
+  "scripts": {
+    "build": "echo 'Extension built successfully'",
+    "test": "echo 'No tests yet'"
+  },
+  "keywords": [
+    "chrome-extension",
+    "memory",
+    "snapshot",
+    "bookmarks",
+    "notes",
+    "browsing-history"
+  ]
+}

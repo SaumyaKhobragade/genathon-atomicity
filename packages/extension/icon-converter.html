@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #667eea;
+      margin-bottom: 20px;
+    }
+    .icon-preview {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .icon-item {
+      text-align: center;
+    }
+    .icon-item img {
+      display: block;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .instructions {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .instructions ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sparky Icon Converter</h1>
+    <p>This tool converts SVG icons to PNG format for the Chrome extension.</p>
+    
+    <div class="icon-preview" id="iconPreview"></div>
+    
+    <button onclick="convertIcons()">Generate PNG Icons</button>
+    
+    <div class="instructions">
+      <strong>Instructions:</strong>
+      <ol>
+        <li>Click "Generate PNG Icons" button above</li>
+        <li>Three PNG files will be downloaded automatically</li>
+        <li>Save them in the <code>packages/extension/icons/</code> folder</li>
+        <li>Replace the .svg files with the downloaded .png files</li>
+        <li>The icons are now ready for use in the extension!</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    const svgIcons = {
+      icon16: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad16" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect width="16" height="16" rx="3" fill="url(#grad16)"/>
+        <path d="M 8 4 L 8 12 M 4 8 L 12 8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>`,
+      
+      icon48: `<svg width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad48" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="8" fill="url(#grad48)"/>
+        <circle cx="24" cy="18" r="6" fill="white"/>
+        <path d="M 15 35 Q 15 28 24 28 Q 33 28 33 35" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 18 40 L 30 40" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>`,
+      
+      icon128: `<svg width="128" height="128" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad128" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect width="128" height="128" rx="20" fill="url(#grad128)"/>
+        <circle cx="64" cy="45" r="18" fill="white"/>
+        <path d="M 35 95 Q 35 70 64 70 Q 93 70 93 95" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M 45 105 L 83 105" stroke="white" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="50" cy="30" r="3" fill="white" opacity="0.5"/>
+        <circle cx="78" cy="35" r="4" fill="white" opacity="0.5"/>
+        <circle cx="88" cy="25" r="2" fill="white" opacity="0.5"/>
+      </svg>`
+    };
+
+    // Display preview
+    const previewDiv = document.getElementById('iconPreview');
+    Object.entries(svgIcons).forEach(([name, svg]) => {
+      const size = name.replace('icon', '');
+      const div = document.createElement('div');
+      div.className = 'icon-item';
+      div.innerHTML = `
+        ${svg}
+        <div>${size}x${size}px</div>
+      `;
+      previewDiv.appendChild(div);
+    });
+
+    function convertIcons() {
+      Object.entries(svgIcons).forEach(([name, svgContent]) => {
+        const size = parseInt(name.replace('icon', ''));
+        svgToPng(svgContent, size, size, `${name}.png`);
+      });
+      alert('PNG icons will be downloaded shortly. Save them to the icons folder!');
+    }
+
+    function svgToPng(svgContent, width, height, filename) {
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      const img = new Image();
+      const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(function(blob) {
+          const link = document.createElement('a');
+          link.download = filename;
+          link.href = URL.createObjectURL(blob);
+          link.click();
+          URL.revokeObjectURL(url);
+        }, 'image/png');
+      };
+
+      img.src = url;
+    }
+  </script>
+</body>
+</html>

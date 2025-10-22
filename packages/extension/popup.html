@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sparky</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <h1>Sparky</h1>
+      </div>
+
+      <!-- Auto-capture Toggle -->
+      <div class="toggle-container">
+        <span class="toggle-text">Auto-capture</span>
+        <label class="switch">
+          <input type="checkbox" id="autoCapture" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button id="captureSelection" class="btn">
+          <span>Capture Selection</span>
+        </button>
+
+        <button id="capturePage" class="btn">
+          <span>Capture Page</span>
+        </button>
+
+        <button id="addNote" class="btn">
+          <span>Add Note</span>
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-value" id="savedCount">0</span>
+          <span class="stat-label">Saved</span>
+        </div>
+        <div class="divider"></div>
+        <div class="stat">
+          <span class="stat-value" id="storageUsed">0</span>
+          <span class="stat-label">MB</span>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <button id="openDashboard" class="link-btn">Open Dashboard</button>
+        <button id="clearData" class="link-btn danger">Clear Data</button>
+      </div>
+
+      <div id="notification" class="notification hidden"></div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
