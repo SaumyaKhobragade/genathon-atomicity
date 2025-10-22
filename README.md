@@ -1,3 +1,140 @@
+<!--
+  Cleaned and restructured README for the genathon-atomicity project.
+  The original README had formatting and ordering issues; this version preserves
+  the original content while improving readability and structure.
+-->
+
+# Sparky — AI-Powered Personal Memory Organizer
+
+![Sparky Logo](packages/extension/icons/icon128.png)
+
+A lightweight personal content memory assistant that captures what you read/watch, adds AI summaries and tags, and makes it easy to find later by keyword, visuals, or even emotion.
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+## Table of Contents
+
+- About
+- Features
+- Quick Start
+- Project structure
+- Development
+- Troubleshooting
+- Contributing
+- License
+
+## About
+
+We consume a flood of content (articles, videos, posts, PDFs), but later often struggle to recall "that one great thing we read." Sparky captures browsing context, enriches content with AI-generated summaries, tags and sentiment, and provides a simple dashboard to browse and search your personal memories.
+
+This project combines a Chrome extension (capture) with a Next.js dashboard (view and search). By default data is local-first (Chrome storage / IndexedDB) and privacy-first.
+
+## Key Features
+
+- Automatic content capture (selection, full-page, or manual)
+- AI summaries and keyword tags
+- Visual thumbnails and optional screenshots
+- Search by keyword, tag, date range and "feeling"
+- Local-first storage with optional sync
+
+## Quick Start
+
+Prerequisites:
+
+- Node.js >= 18
+- npm >= 9
+- Google Chrome (for the extension)
+
+Get started:
+
+```powershell
+git clone https://github.com/SaumyaKhobragade/genathon-atomicity.git
+cd genathon-atomicity
+npm install
+cd packages/website && npm install
+```
+
+Run the website locally:
+
+```powershell
+cd packages/website
+npm run dev
+# Visit http://localhost:3000
+```
+
+Load the extension in Chrome:
+
+1. Open chrome://extensions/
+2. Enable Developer mode
+3. Click "Load unpacked" and select `packages/extension`
+
+## Project structure
+
+```
+genathon-atomicity/
+├── packages/
+│   ├── extension/        # Chrome extension source
+│   ├── website/          # Next.js dashboard
+│   └── shared/           # Shared code (utilities, types)
+├── package.json
+├── README.md
+└── LICENSE
+```
+
+## Development
+
+Start all services (website + extension development):
+
+```powershell
+npm run dev
+```
+
+Website only:
+
+```powershell
+cd packages/website
+npm run dev
+```
+
+Extension only:
+
+1. Load the `packages/extension` folder into chrome://extensions/
+2. Reload the extension after making changes
+
+Useful commands:
+
+```powershell
+npm run install:all   # install across workspace
+npm run lint
+npm run build         # build website for production
+```
+
+## Troubleshooting
+
+- Extension not loading: enable Developer mode, check `manifest.json` for errors, reload extension
+- Floating button not appearing: select at least 5 characters; avoid chrome:// pages; check console
+- Dashboard not showing data: ensure extension is loaded and HMR is running on localhost:3000
+
+## Contributing
+
+Contributions are welcome. Please fork the repository, create a feature branch and open a pull request.
+
+Suggested workflow:
+
+```powershell
+git checkout -b feature/your-feature
+# make changes
+git commit -m "feat: short description"
+git push origin feature/your-feature
+```
+
+## License
+
+This project is licensed under the MIT License — see the `LICENSE` file for details.
+
+---
+
+If you'd like additional changes (more sections restored from the original README, badges, or formatting), tell me which sections to include and I'll update the file and commit.
 # 🌟 Sparky - AI-Powered Personal Memory Organizer# Sparky — AI-Powered Personal Content Organizer
 
 
